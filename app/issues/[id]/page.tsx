@@ -1,8 +1,9 @@
 import IssueStatusBadge from '@/app/components/IssueStatusBadge'
-import { Card, Flex, Heading, Text } from '@radix-ui/themes'
+import { Card, Flex, Heading, Text,Grid, Box, Button, Link } from '@radix-ui/themes'
 import { notFound } from 'next/navigation'
 import React from 'react'
 import Markdown from 'react-markdown'
+import { Pencil2Icon } from '@radix-ui/react-icons'
 
 interface Props{
     params: {id:string}
@@ -20,17 +21,26 @@ const IssueDetailsPage = async ({params}:Props) => {
     }
 
   return (
-    <div>
+    <Grid columns={{
+        initial: '1',
+        md: '2'
+      }} gap="3">
+        <Box>
         <Heading>{issue.title}</Heading>
         <Flex gap="6" >
         <IssueStatusBadge status={issue.status}/>
         <Text>{issue.createdAt.toDateString()}</Text>
         </Flex>
         <Card className='mt-3'>
-            <Markdown className='prose'>{issue.description}</Markdown>
+            <Markdown className='prose my-4' >{issue.description}</Markdown>
         </Card>
+        </Box>
+        <Box>
+        <Link href='/issues'><Button><Pencil2Icon/>Edit Issue</Button></Link>
+        </Box>
+    
 
-    </div>
+    </Grid>
   )
 }
 
