@@ -4,12 +4,14 @@ import { notFound } from 'next/navigation'
 import React from 'react'
 import Markdown from 'react-markdown'
 import { Pencil2Icon } from '@radix-ui/react-icons'
+import { PrismaClient } from '@prisma/client'
 
 interface Props{
     params: {id:string}
 }
 
 const IssueDetailsPage = async ({params}:Props) => {
+  const prisma = new PrismaClient();
 
     const issue = await prisma?.ticket.findUnique({
         where:{id: parseInt(params.id)}
@@ -36,7 +38,7 @@ const IssueDetailsPage = async ({params}:Props) => {
         </Card>
         </Box>
         <Box>
-        <Link href='/issues'><Button><Pencil2Icon/>Edit Issue</Button></Link>
+        <Link href= {`/issues/${issue.id}/edit`} ><Button><Pencil2Icon/>Edit Issue</Button></Link>
         </Box>
     
 
